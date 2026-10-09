@@ -235,11 +235,16 @@ function createBirthdayPile({ screenName, stageId, counterId, hintId, pool, tota
     void counterEl.parentElement.offsetWidth; // reinicia l'animació del pols
     counterEl.parentElement.classList.add("bday-counter");
 
-    if (count === 1 && hintEl) hintEl.textContent = "Toca per continuar →";
+    // Després del primer toc ja s'ha entès la mecànica: amaguem la pista.
+    if (count === 1 && hintEl) hintEl.hidden = true;
 
     if (count >= total) {
       finished = true;
-      if (hintEl) hintEl.textContent = "Toca per obrir el regal →";
+      // Al final la tornem a mostrar: ara cal saber que hi ha un pas més.
+      if (hintEl) {
+        hintEl.textContent = "Toca per continuar →";
+        hintEl.hidden = false;
+      }
       screenEl.addEventListener(
         "click",
         () => {

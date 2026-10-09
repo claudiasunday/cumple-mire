@@ -389,6 +389,18 @@ a { font-family: inherit; }
   100% { transform: scale(1); }
 }
 
+/* comptador a baix de tot, amb la pista (quan es veu) just a sobre */
+.bday-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.screen[data-screen="part2"] .tap-hint[hidden] { display: none; }
+
 .bday-counter-total {
   font-size: 22px;
   opacity: 0.85;
