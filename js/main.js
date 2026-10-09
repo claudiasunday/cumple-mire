@@ -54,6 +54,9 @@ const PART2_POOL = [
   "assets/collage/collage-10.png",
 ];
 
+// Segons que es veuen els caps sense ulleres abans que comenci la transició.
+const HEADS_HOLD_S = 2.5;
+
 // ---------------------------------------------------------------------------
 // Motor de navegació entre pantalles
 // ---------------------------------------------------------------------------
@@ -121,7 +124,9 @@ function renderFinale(stageEl, captionEl, finale) {
     vr.className = "head-img is-vr";
     vr.src = head.vr;
     vr.alt = "";
-    vr.style.animationDelay = `${0.25 + i * 0.15}s`;
+    // Primer es veuen els tres caps sense ulleres una bona estona; després
+    // les ulleres apareixen amb un fos suau, una darrere l'altra.
+    vr.style.animationDelay = `${HEADS_HOLD_S + i * 0.5}s`;
     slot.appendChild(vr);
 
     heads.appendChild(slot);
@@ -174,6 +179,18 @@ function createRevealSequence({ screenName, stageId, captionId, dotsId, steps, f
   return { start: advance };
 }
 
+function halton(index, base) {
+  let result = 0;
+  let f = 1 / base;
+  let i = index;
+  while (i > 0) {
+    result += f * (i % base);
+    i = Math.floor(i / base);
+    f /= base;
+  }
+  return result;
+}
+
 /**
  * Crea la pila d'aniversari de la part 2: cada toc "estampa" una foto nova
  * sobre la pila (com una pila de polaroids) i avança un comptador fins a
@@ -194,16 +211,15 @@ function createBirthdayPile({ screenName, stageId, counterId, hintId, pool, tota
     img.src = pool[i % pool.length];
     img.alt = "";
 
-    // Dispersió pseudo-aleatòria però determinista, perquè cada tanda
-    // de voltes pel pool es vegi diferent de l'anterior.
-    const angle = (i * 47) % 360;
-    const radius = 10 + ((i * 29) % 18);
-    const px = Math.round(Math.cos((angle * Math.PI) / 180) * radius);
-    const py = Math.round(Math.sin((angle * Math.PI) / 180) * radius);
-    const rot = ((i * 37) % 50) - 25;
+    // Repartits per tota la pantalla amb una seqüència de Halton (bases 2 i
+    // 3): sembla aleatori però cobreix l'espai de manera uniforme, sense
+    // amuntegar-se al centre. Determinista, així sempre es veu igual.
+    const x = 14 + halton(i + 1, 2) * 72;
+    const y = 27 + halton(i + 1, 3) * 54;
+    const rot = ((i * 37) % 30) - 15;
 
-    img.style.setProperty("--px", `${px}%`);
-    img.style.setProperty("--py", `${py}%`);
+    img.style.left = `${x}%`;
+    img.style.top = `${y}%`;
     img.style.setProperty("--pr", `${rot}deg`);
     img.style.zIndex = String(i + 1);
 
@@ -261,6 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
     pool: PART2_POOL,
     total: BIRTHDAY_AGE,
     onFinished: () => {
+      // Es renderitzen els caps just en entrar a la pantalla perquè
+      // l'animació comenci quan l'usuari la mira, no en carregar la pàgina.
+      renderFinale(document.getElementById("part3-stage"), document.getElementById("part3-caption"), PART3_HEADS);
       goToScreen("part3");
     },
   });
@@ -274,7 +293,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // cop (no és una seqüència de passos) i un toc fa aparèixer el sobre.
   const part3Heads = document.getElementById("part3-heads");
   const part3Envelope = document.getElementById("part3-envelope");
-  renderFinale(document.getElementById("part3-stage"), document.getElementById("part3-caption"), PART3_HEADS);
 
   part3Heads.addEventListener(
     "click",
