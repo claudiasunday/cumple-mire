@@ -223,6 +223,8 @@ function createBirthdayPile({ screenName, stageId, counterId, hintId, pool, tota
     img.style.setProperty("--pr", `${rot}deg`);
     img.style.zIndex = String(i + 1);
 
+    // Els stickers anteriors queden una mica enfosquits perquè el nou destaqui.
+    stageEl.querySelectorAll(".pile-photo:not(.is-old)").forEach((el) => el.classList.add("is-old"));
     stageEl.appendChild(img);
   }
 
@@ -316,8 +318,14 @@ document.addEventListener("DOMContentLoaded", () => {
   envelopeWrap.addEventListener("click", () => {
     if (envelope.classList.contains("is-open")) return;
     envelope.classList.add("is-open");
+    envelopeWrap.classList.add("is-open");
+    // segell → solapa → carta que surt; la targeta arriba quan la carta ja és fora
     setTimeout(() => {
       giftCard.hidden = false;
-    }, 350);
+      // baixa fins que la carta queda a dalt de tot, amb la targeta a sota
+      const letter = envelope.querySelector(".envelope-letter");
+      const top = letter.getBoundingClientRect().top + window.scrollY - 24;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    }, 1500);
   });
 });
