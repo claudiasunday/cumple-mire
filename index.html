@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Per a tu 💜</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<main id="app" class="app">
+
+  <!-- Pantalla d'inici -->
+  <section class="screen is-active" data-screen="intro">
+    <div class="intro-content">
+      <p class="eyebrow">Per a tu</p>
+      <h1 class="title-hand">Obre els ulls…<br />i el cor 💜</h1>
+      <p class="intro-text">Tenim una sorpresa per a tu. Però abans, fem un petit viatge pel nostre collage de records.</p>
+      <button class="btn-primary" id="start-btn" type="button">Comença ✨</button>
+    </div>
+  </section>
+
+  <!-- Part 1: collage tap-to-reveal -->
+  <section class="screen" data-screen="part1">
+    <header class="part-header">
+      <p class="part-kicker">Part 1</p>
+      <div class="dots" id="part1-dots"></div>
+    </header>
+    <div class="stage" id="part1-stage"></div>
+    <p class="step-caption" id="part1-caption"></p>
+    <p class="tap-hint">Toca la pantalla per continuar →</p>
+  </section>
+
+  <!-- Part 2: collage divertit (contingut pendent) -->
+  <section class="screen" data-screen="part2">
+    <header class="part-header">
+      <p class="part-kicker">Part 2</p>
+      <div class="dots" id="part2-dots"></div>
+    </header>
+    <div class="stage" id="part2-stage"></div>
+    <p class="step-caption" id="part2-caption"></p>
+    <p class="tap-hint">Toca la pantalla per continuar →</p>
+  </section>
+
+  <!-- Part 3: revelació del regal -->
+  <section class="screen" data-screen="part3">
+    <div class="envelope-wrap" id="envelope-wrap">
+      <div class="envelope" id="envelope">
+        <div class="envelope-shadow"></div>
+        <div class="envelope-body">
+          <div class="envelope-flap"></div>
+          <p class="envelope-label">El teu regal<br />t'espera</p>
+        </div>
+      </div>
+      <p class="tap-hint">Toca per obrir 🎁</p>
+    </div>
+
+    <article class="gift-card" id="gift-card" hidden>
+      <p class="gift-kicker">El teu regal és…</p>
+      <h2 class="gift-title">Una aventura de Realitat Virtual amb llibertat total de moviment</h2>
+
+      <ul class="gift-facts">
+        <li>📍 VRoom Escape · Carrer Pacífic 19, Barcelona</li>
+        <li>⏱️ 45 minuts de missió immersiva</li>
+        <li>⭐ 10/10 “Extraordinari”</li>
+      </ul>
+
+      <p class="gift-desc">
+        Et moussis lliurement per tota la sala, sense motxilles ni cables: només unes ulleres de realitat virtual
+        i set missions per viure amb el teu equip — de l'espai exterior a un temple perdut sota el mar, passant
+        per dracs i pirates. Prepara't per entrar en una realitat on tot és possible.
+      </p>
+
+      <a class="btn-primary" id="gift-link" href="https://www.atrapalo.com/actividades/vive-tu-aventura-de-realidad-virtual-con-total-libertad-de-movimiento_e4901641/#reviews" target="_blank" rel="noopener">
+        Veure l'experiència →
+      </a>
+    </article>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

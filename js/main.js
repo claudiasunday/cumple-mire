@@ -1,0 +1,202 @@
+// ---------------------------------------------------------------------------
+// Contingut: edita aquestes llistes per canviar fotos i textos.
+// Cada pas normal és { img, caption }. L'últim pas de la part 1 és el
+// "finale": les tres amigues + ulleres de RV superposades.
+// ---------------------------------------------------------------------------
+
+const PART1_STEPS = [
+  { img: "assets/collage/collage-01.png", caption: "Aquella nit que ho vam donar tot ✨" },
+  { img: "assets/collage/collage-02.png", caption: "Les cares de sempre 💛" },
+  { img: "assets/collage/collage-03.png", caption: "Brindant per nosaltres 🥂" },
+  { img: "assets/collage/collage-04.png", caption: "Filtres i rialles sense parar" },
+  { img: "assets/collage/collage-05.png", caption: "Els nostres petits rituals" },
+  { img: "assets/collage/collage-06.png", caption: "Mai falta un moment boig" },
+  { img: "assets/collage/collage-07.png", caption: "Morrets per a la càmera 😚" },
+  { img: "assets/collage/collage-08.png", caption: "Un dia qualsevol, inoblidable" },
+  { img: "assets/collage/collage-09.png", caption: "De viatge, com sempre" },
+  { img: "assets/collage/collage-10.png", caption: "Des de fa anys, juntes" },
+];
+
+const PART1_FINALE = {
+  img: "assets/collage/collage-finale.png",
+  text: "I ara... prepara't per entrar en una realitat on tot és possible 🥽",
+  glasses: [
+    { left: "31%", top: "32%", width: "30%", tilt: "-6deg" },
+    { left: "52%", top: "37%", width: "30%", tilt: "3deg" },
+    { left: "71%", top: "40%", width: "30%", tilt: "8deg" },
+  ],
+};
+
+// Part 2: contingut encara per definir — deixa aquí les fotos i textos
+// quan els tingueu llestos, amb el mateix format que PART1_STEPS.
+const PART2_STEPS = [
+  { img: "assets/collage/collage-04.png", caption: "(aquí anirà una foto nova 📸)" },
+  { img: "assets/collage/collage-06.png", caption: "(i aquí un altre moment divertit 🤪)" },
+];
+
+// ---------------------------------------------------------------------------
+// Motor de navegació entre pantalles
+// ---------------------------------------------------------------------------
+
+const screens = Array.from(document.querySelectorAll(".screen"));
+
+function goToScreen(name) {
+  screens.forEach((el) => el.classList.toggle("is-active", el.dataset.screen === name));
+  window.scrollTo(0, 0);
+}
+
+// ---------------------------------------------------------------------------
+// Motor reutilitzable de "toca per revelar"
+// ---------------------------------------------------------------------------
+
+function renderDots(dotsEl, total, currentIndex) {
+  dotsEl.innerHTML = "";
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    if (i < currentIndex) dot.classList.add("is-done");
+    if (i === currentIndex) dot.classList.add("is-current");
+    dotsEl.appendChild(dot);
+  }
+}
+
+function renderStep(stageEl, captionEl, step, tiltSeed) {
+  stageEl.innerHTML = "";
+  const wrap = document.createElement("div");
+  wrap.className = "stage-step";
+  wrap.style.setProperty("--tilt", `${tiltSeed}deg`);
+
+  const img = document.createElement("img");
+  img.className = "stage-photo";
+  img.src = step.img;
+  img.alt = step.caption || "";
+  wrap.appendChild(img);
+
+  stageEl.appendChild(wrap);
+
+  captionEl.textContent = step.caption;
+  captionEl.classList.remove("is-finale-caption");
+}
+
+function renderFinale(stageEl, captionEl, finale) {
+  stageEl.innerHTML = "";
+  const wrap = document.createElement("div");
+  wrap.className = "stage-step is-finale";
+  wrap.style.setProperty("--tilt", "0deg");
+
+  const img = document.createElement("img");
+  img.className = "stage-photo";
+  img.src = finale.img;
+  img.alt = "";
+  wrap.appendChild(img);
+
+  finale.glasses.forEach((g, i) => {
+    const glasses = document.createElement("img");
+    glasses.className = "vr-glasses";
+    glasses.src = "assets/graphics/vr-glasses.svg";
+    glasses.alt = "";
+    glasses.style.left = g.left;
+    glasses.style.top = g.top;
+    glasses.style.width = g.width;
+    glasses.style.setProperty("--g-tilt", g.tilt);
+    glasses.style.animationDelay = `${0.15 + i * 0.12}s`;
+    wrap.appendChild(glasses);
+  });
+
+  stageEl.appendChild(wrap);
+
+  captionEl.textContent = finale.text;
+  captionEl.classList.add("is-finale-caption");
+}
+
+/**
+ * Crea una seqüència "toca per revelar" dins d'una pantalla.
+ * steps: array de { img, caption }
+ * finale: opcional, { img, text, glasses } mostrat com a últim pas especial
+ * onFinished: callback quan s'acaben tots els passos (inclòs el finale)
+ */
+function createRevealSequence({ screenName, stageId, captionId, dotsId, steps, finale, onFinished }) {
+  const screenEl = document.querySelector(`[data-screen="${screenName}"]`);
+  const stageEl = document.getElementById(stageId);
+  const captionEl = document.getElementById(captionId);
+  const dotsEl = document.getElementById(dotsId);
+  const totalDots = steps.length + (finale ? 1 : 0);
+
+  let index = -1;
+  let finished = false;
+
+  function showCurrent() {
+    renderDots(dotsEl, totalDots, index);
+    if (index < steps.length) {
+      const tiltSeed = index % 2 === 0 ? -3 - (index % 3) : 3 + (index % 3);
+      renderStep(stageEl, captionEl, steps[index], tiltSeed);
+    } else if (finale) {
+      renderFinale(stageEl, captionEl, finale);
+    }
+  }
+
+  function advance() {
+    if (finished) return;
+    if (index < totalDots - 1) {
+      index += 1;
+      showCurrent();
+    } else {
+      finished = true;
+      if (onFinished) onFinished();
+    }
+  }
+
+  screenEl.addEventListener("click", advance);
+  return { start: advance };
+}
+
+// ---------------------------------------------------------------------------
+// Inicialització
+// ---------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("start-btn");
+
+  const part1 = createRevealSequence({
+    screenName: "part1",
+    stageId: "part1-stage",
+    captionId: "part1-caption",
+    dotsId: "part1-dots",
+    steps: PART1_STEPS,
+    finale: PART1_FINALE,
+    onFinished: () => {
+      goToScreen("part2");
+      part2.start();
+    },
+  });
+
+  const part2 = createRevealSequence({
+    screenName: "part2",
+    stageId: "part2-stage",
+    captionId: "part2-caption",
+    dotsId: "part2-dots",
+    steps: PART2_STEPS,
+    finale: null,
+    onFinished: () => {
+      goToScreen("part3");
+    },
+  });
+
+  startBtn.addEventListener("click", () => {
+    goToScreen("part1");
+    part1.start();
+  });
+
+  // Part 3: sobre que s'obre amb el regal
+  const envelopeWrap = document.getElementById("envelope-wrap");
+  const envelope = document.getElementById("envelope");
+  const giftCard = document.getElementById("gift-card");
+
+  envelopeWrap.addEventListener("click", () => {
+    if (envelope.classList.contains("is-open")) return;
+    envelope.classList.add("is-open");
+    setTimeout(() => {
+      giftCard.hidden = false;
+    }, 350);
+  });
+});
