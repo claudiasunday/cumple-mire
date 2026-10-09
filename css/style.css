@@ -1,14 +1,14 @@
 /* ---------- Base & tokens ---------- */
 :root {
-  --bg-1: #170b30;
-  --bg-2: #3a1565;
-  --pink: #ff5fae;
-  --purple: #8a4dff;
-  --orange: #ff9a56;
+  --bg-1: #0a2e33;
+  --bg-2: #0f4c56;
+  --pink: #ff8a65;
+  --purple: #2fa2ab;
+  --orange: #ffcf9e;
   --cream: #fff6ea;
-  --ink: #2b1a4a;
+  --ink: #123338;
   --accent: #ffd166;
-  --shadow: rgba(14, 5, 36, 0.45);
+  --shadow: rgba(8, 28, 32, 0.45);
 
   /* beach palette (part 2) */
   --beach-teal-deep: #0f4c56;
@@ -51,9 +51,9 @@ button, a { font-family: inherit; }
   margin: 0 auto;
   overflow: hidden;
   background:
-    radial-gradient(circle at 15% 10%, rgba(255, 95, 174, 0.35), transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(138, 77, 255, 0.4), transparent 50%),
-    radial-gradient(circle at 50% 90%, rgba(255, 154, 86, 0.25), transparent 55%),
+    radial-gradient(circle at 15% 10%, rgba(47, 162, 171, 0.4), transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(226, 87, 76, 0.3), transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(255, 207, 158, 0.28), transparent 55%),
     linear-gradient(160deg, var(--bg-1), var(--bg-2));
 }
 
@@ -207,7 +207,7 @@ button, a { font-family: inherit; }
   font-family: "Caveat", cursive;
   font-size: 26px;
   color: var(--cream);
-  background: rgba(27, 15, 54, 0.55);
+  background: rgba(10, 46, 51, 0.55);
   padding: 6px 18px;
   border-radius: 14px;
   max-width: 90%;
