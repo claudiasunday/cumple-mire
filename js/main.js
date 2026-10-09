@@ -34,6 +34,8 @@ const PART3_HEADS = {
 // Part 2: "Feliços 29" — cada toc apila una foto nova (una per any).
 // BIRTHDAY_AGE taps en total; les fotos del pool es van repetint en bucle
 // si n'hi ha menys que anys, variant sempre la posició/gir de cada tanda.
+// Actualment hi ha 20 fotos úniques; falten 9 per arribar a les 29 sense
+// repetir cap — afegeix-les aquí quan hi siguin (assets/collage/collage-XX.png).
 const BIRTHDAY_AGE = 29;
 
 const PART2_POOL = [
@@ -42,6 +44,10 @@ const PART2_POOL = [
   "assets/collage/collage-13.png",
   "assets/collage/collage-14.png",
   "assets/collage/collage-15.png",
+  "assets/collage/collage-16.png",
+  "assets/collage/collage-17.png",
+  "assets/collage/collage-18.png",
+  "assets/collage/collage-19.png",
   "assets/collage/collage-01.png",
   "assets/collage/collage-02.png",
   "assets/collage/collage-03.png",
@@ -52,6 +58,7 @@ const PART2_POOL = [
   "assets/collage/collage-08.png",
   "assets/collage/collage-09.png",
   "assets/collage/collage-10.png",
+  "assets/collage/collage-finale.png",
 ];
 
 // Segons que es veuen els caps sense ulleres abans que comenci la transició.
