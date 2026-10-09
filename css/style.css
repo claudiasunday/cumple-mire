@@ -9,6 +9,16 @@
   --ink: #2b1a4a;
   --accent: #ffd166;
   --shadow: rgba(14, 5, 36, 0.45);
+
+  /* beach palette (part 2) */
+  --beach-teal-deep: #0f4c56;
+  --beach-teal: #1c7a84;
+  --beach-teal-light: #2fa2ab;
+  --beach-sand: #f3c7a6;
+  --beach-sand-light: #fbe2cc;
+  --beach-cream: #fff9f0;
+  --beach-coral: #e2574c;
+  --beach-ink: #123338;
 }
 
 * { box-sizing: border-box; }
@@ -228,6 +238,105 @@ button, a { font-family: inherit; }
   color: var(--accent);
   background: transparent;
   padding: 0;
+}
+
+/* ---------- Part 2: birthday photo pile ---------- */
+.screen[data-screen="part2"] {
+  background:
+    radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.18), transparent 45%),
+    linear-gradient(145deg, var(--beach-teal-deep) 0%, var(--beach-teal) 38%, var(--beach-teal-light) 52%, var(--beach-sand) 78%, var(--beach-sand-light) 100%);
+}
+
+.beach-deco {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.9;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+.shell-1 { top: 6%; left: 8%; width: 40px; transform: rotate(-12deg); background-image: url("../assets/graphics/shell.svg"); }
+.shell-2 { bottom: 10%; right: 10%; width: 52px; transform: rotate(20deg); background-image: url("../assets/graphics/shell.svg"); }
+.star-1 { top: 14%; right: 9%; width: 32px; transform: rotate(10deg); background-image: url("../assets/graphics/starfish.svg"); }
+.star-2 { bottom: 20%; left: 7%; width: 30px; transform: rotate(-16deg); background-image: url("../assets/graphics/starfish.svg"); }
+
+.bday-header {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.bday-title {
+  font-size: 48px;
+  color: var(--beach-cream);
+  text-shadow: 0 4px 10px rgba(15, 76, 86, 0.4);
+}
+
+.bday-subtitle {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: rgba(255, 249, 240, 0.9);
+}
+
+.pile-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
+}
+
+.pile-photo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 62%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 16px rgba(15, 51, 56, 0.4));
+  animation: stamp-drop 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.3) both;
+}
+
+@keyframes stamp-drop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--px, 0), var(--py, 0)) rotate(var(--pr, 0deg)) scale(0.4);
+  }
+  70% {
+    transform: translate(-50%, -50%) translate(var(--px, 0), var(--py, 0)) rotate(var(--pr, 0deg)) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(var(--px, 0), var(--py, 0)) rotate(var(--pr, 0deg)) scale(1);
+  }
+}
+
+.bday-counter {
+  position: relative;
+  z-index: 1;
+  font-family: "Caveat", cursive;
+  font-size: 34px;
+  color: var(--beach-cream);
+  margin: 0;
+  animation: counter-pulse 0.3s ease;
+}
+
+@keyframes counter-pulse {
+  0% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.bday-counter-total {
+  font-size: 22px;
+  opacity: 0.75;
+}
+
+.screen[data-screen="part2"] .tap-hint {
+  position: relative;
+  z-index: 1;
+  color: rgba(255, 249, 240, 0.75);
 }
 
 /* ---------- Gift reveal (part 3) ---------- */

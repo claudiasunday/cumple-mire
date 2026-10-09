@@ -27,11 +27,27 @@ const PART1_FINALE = {
   ],
 };
 
-// Part 2: contingut encara per definir — deixa aquí les fotos i textos
-// quan els tingueu llestos, amb el mateix format que PART1_STEPS.
-const PART2_STEPS = [
-  { img: "assets/collage/collage-04.png", caption: "(aquí anirà una foto nova 📸)" },
-  { img: "assets/collage/collage-06.png", caption: "(i aquí un altre moment divertit 🤪)" },
+// Part 2: "Feliços 29" — cada toc apila una foto nova (una per any).
+// BIRTHDAY_AGE taps en total; les fotos del pool es van repetint en bucle
+// si n'hi ha menys que anys, variant sempre la posició/gir de cada tanda.
+const BIRTHDAY_AGE = 29;
+
+const PART2_POOL = [
+  "assets/collage/collage-11.png",
+  "assets/collage/collage-12.png",
+  "assets/collage/collage-13.png",
+  "assets/collage/collage-14.png",
+  "assets/collage/collage-15.png",
+  "assets/collage/collage-01.png",
+  "assets/collage/collage-02.png",
+  "assets/collage/collage-03.png",
+  "assets/collage/collage-04.png",
+  "assets/collage/collage-05.png",
+  "assets/collage/collage-06.png",
+  "assets/collage/collage-07.png",
+  "assets/collage/collage-08.png",
+  "assets/collage/collage-09.png",
+  "assets/collage/collage-10.png",
 ];
 
 // ---------------------------------------------------------------------------
@@ -150,6 +166,73 @@ function createRevealSequence({ screenName, stageId, captionId, dotsId, steps, f
   return { start: advance };
 }
 
+/**
+ * Crea la pila d'aniversari de la part 2: cada toc "estampa" una foto nova
+ * sobre la pila (com una pila de polaroids) i avança un comptador fins a
+ * `total`. No hi ha textos per foto, només el comptador.
+ */
+function createBirthdayPile({ screenName, stageId, counterId, hintId, pool, total, onFinished }) {
+  const screenEl = document.querySelector(`[data-screen="${screenName}"]`);
+  const stageEl = document.getElementById(stageId);
+  const counterEl = document.getElementById(counterId);
+  const hintEl = document.getElementById(hintId);
+
+  let count = 0;
+  let finished = false;
+
+  function stampPhoto(i) {
+    const img = document.createElement("img");
+    img.className = "pile-photo";
+    img.src = pool[i % pool.length];
+    img.alt = "";
+
+    // Dispersió pseudo-aleatòria però determinista, perquè cada tanda
+    // de voltes pel pool es vegi diferent de l'anterior.
+    const angle = (i * 47) % 360;
+    const radius = 10 + ((i * 29) % 18);
+    const px = Math.round(Math.cos((angle * Math.PI) / 180) * radius);
+    const py = Math.round(Math.sin((angle * Math.PI) / 180) * radius);
+    const rot = ((i * 37) % 50) - 25;
+
+    img.style.setProperty("--px", `${px}%`);
+    img.style.setProperty("--py", `${py}%`);
+    img.style.setProperty("--pr", `${rot}deg`);
+    img.style.zIndex = String(i + 1);
+
+    stageEl.appendChild(img);
+  }
+
+  function advance() {
+    if (finished) return;
+    count += 1;
+    stampPhoto(count - 1);
+    counterEl.textContent = String(count);
+    counterEl.parentElement.classList.remove("bday-counter");
+    void counterEl.parentElement.offsetWidth; // reinicia l'animació del pols
+    counterEl.parentElement.classList.add("bday-counter");
+
+    if (count === 1 && hintEl) hintEl.textContent = "Toca per continuar →";
+
+    if (count >= total) {
+      finished = true;
+      if (hintEl) hintEl.textContent = "Toca per obrir el regal →";
+      screenEl.addEventListener(
+        "click",
+        () => {
+          if (onFinished) onFinished();
+        },
+        { once: true }
+      );
+    }
+  }
+
+  screenEl.addEventListener("click", () => {
+    if (!finished) advance();
+  });
+
+  return { start: advance };
+}
+
 // ---------------------------------------------------------------------------
 // Inicialització
 // ---------------------------------------------------------------------------
@@ -166,17 +249,16 @@ document.addEventListener("DOMContentLoaded", () => {
     finale: PART1_FINALE,
     onFinished: () => {
       goToScreen("part2");
-      part2.start();
     },
   });
 
-  const part2 = createRevealSequence({
+  createBirthdayPile({
     screenName: "part2",
-    stageId: "part2-stage",
-    captionId: "part2-caption",
-    dotsId: "part2-dots",
-    steps: PART2_STEPS,
-    finale: null,
+    stageId: "pile-stage",
+    counterId: "pile-count",
+    hintId: "part2-hint",
+    pool: PART2_POOL,
+    total: BIRTHDAY_AGE,
     onFinished: () => {
       goToScreen("part3");
     },
