@@ -35,7 +35,7 @@ html, body {
 }
 
 h1, h2, .title-hand {
-  font-family: "Caveat", cursive;
+  font-family: "Fredoka", sans-serif;
   font-weight: 700;
   line-height: 1.1;
   margin: 0;
@@ -176,7 +176,7 @@ a { font-family: inherit; }
 }
 
 .part-kicker {
-  font-family: "Caveat", cursive;
+  font-family: "Fredoka", sans-serif;
   font-size: 22px;
   color: var(--accent);
   margin: 0;
@@ -232,7 +232,7 @@ a { font-family: inherit; }
 }
 
 .step-caption {
-  font-family: "Caveat", cursive;
+  font-family: "Fredoka", sans-serif;
   font-size: clamp(21px, 5.5vw, 26px);
   line-height: 1.25;
   color: var(--cream);
@@ -306,25 +306,10 @@ a { font-family: inherit; }
 /* ---------- Part 2: birthday photo pile ---------- */
 .screen[data-screen="part2"] {
   background:
-    radial-gradient(circle at 80% 85%, rgba(255, 255, 255, 0.18), transparent 45%),
-    linear-gradient(145deg, var(--beach-teal-deep) 0%, var(--beach-teal) 38%, var(--beach-teal-light) 52%, var(--beach-sand) 78%, var(--beach-sand-light) 100%);
+    linear-gradient(180deg, rgba(10, 46, 51, 0.55) 0%, rgba(10, 46, 51, 0.15) 35%, rgba(10, 46, 51, 0.3) 70%, rgba(10, 46, 51, 0.6) 100%),
+    url("../assets/graphics/beach-collage.jpg") center / cover no-repeat;
+  background-color: var(--beach-teal-deep);
 }
-
-.beach-deco {
-  position: absolute;
-  width: 46px;
-  height: 46px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  opacity: 0.9;
-  pointer-events: none;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
-}
-
-.shell-1 { top: 6%; left: 8%; width: 40px; transform: rotate(-12deg); background-image: url("../assets/graphics/shell.svg"); }
-.shell-2 { bottom: 10%; right: 10%; width: 52px; transform: rotate(20deg); background-image: url("../assets/graphics/shell.svg"); }
-.star-1 { top: 14%; right: 9%; width: 32px; transform: rotate(10deg); background-image: url("../assets/graphics/starfish.svg"); }
-.star-2 { bottom: 20%; left: 7%; width: 30px; transform: rotate(-16deg); background-image: url("../assets/graphics/starfish.svg"); }
 
 .bday-header {
   position: relative;
@@ -380,7 +365,7 @@ a { font-family: inherit; }
 .bday-counter {
   position: relative;
   z-index: 1;
-  font-family: "Caveat", cursive;
+  font-family: "Fredoka", sans-serif;
   font-size: 34px;
   color: var(--beach-cream);
   background: rgba(10, 46, 51, 0.4);
@@ -406,6 +391,21 @@ a { font-family: inherit; }
   color: var(--beach-cream);
   background: rgba(10, 46, 51, 0.4);
   padding: 4px 14px;
+}
+
+/* ---------- Part 3: caps + ulleres, després el regal ---------- */
+.heads-reveal,
+.envelope-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.heads-reveal[hidden],
+.envelope-stage[hidden] {
+  display: none;
 }
 
 /* ---------- Gift reveal (part 3) ---------- */
@@ -451,7 +451,7 @@ a { font-family: inherit; }
   left: 0;
   right: 0;
   margin: 0;
-  font-family: "Caveat", cursive;
+  font-family: "Fredoka", sans-serif;
   font-size: 20px;
   color: var(--ink);
   font-weight: 700;

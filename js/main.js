@@ -1,7 +1,10 @@
 // ---------------------------------------------------------------------------
 // Contingut: edita aquestes llistes per canviar fotos i textos.
-// Cada pas normal és { img, caption }. L'últim pas de la part 1 és el
-// "finale": les tres amigues + ulleres de RV superposades.
+// Cada pas normal és { img, caption }.
+//
+// NOTA: la part 1 original (collage de 10 fotos) es manté aquí per si es vol
+// reactivar algun dia, però ara queda oculta: l'experiència comença
+// directament a la part 2 ("Feliços 29"). Vegeu la inicialització més avall.
 // ---------------------------------------------------------------------------
 
 const PART1_STEPS = [
@@ -17,12 +20,14 @@ const PART1_STEPS = [
   { img: "assets/collage/collage-10.png", caption: "Des de fa anys, juntes" },
 ];
 
-const PART1_FINALE = {
+// Part 3, primer pas: els tres caps + ulleres de RV. La Mire (l'aniversari)
+// va al centre.
+const PART3_HEADS = {
   text: "I ara... prepara't per entrar en una realitat on tot és possible 🥽",
   heads: [
     { plain: "assets/heads/head-1.png", vr: "assets/heads/head-1-vr.png", position: "left" },
-    { plain: "assets/heads/head-2.png", vr: "assets/heads/head-2-vr.png", position: "center" },
-    { plain: "assets/heads/head-3.png", vr: "assets/heads/head-3-vr.png", position: "right" },
+    { plain: "assets/heads/head-3.png", vr: "assets/heads/head-3-vr.png", position: "center" },
+    { plain: "assets/heads/head-2.png", vr: "assets/heads/head-2-vr.png", position: "right" },
   ],
 };
 
@@ -243,19 +248,12 @@ function createBirthdayPile({ screenName, stageId, counterId, hintId, pool, tota
 document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("start-btn");
 
-  const part1 = createRevealSequence({
-    screenName: "part1",
-    stageId: "part1-stage",
-    captionId: "part1-caption",
-    dotsId: "part1-dots",
-    steps: PART1_STEPS,
-    finale: PART1_FINALE,
-    onFinished: () => {
-      goToScreen("part2");
-    },
-  });
+  // La part 1 (collage de 10 fotos) queda oculta del recorregut: l'experiència
+  // comença directament a "Feliços 29". Es deixa `createRevealSequence` i
+  // `PART1_STEPS` intactes per si es vol reactivar més endavant — simplement
+  // caldria tornar a cridar `part1.start()` des del botó d'inici.
 
-  createBirthdayPile({
+  const part2 = createBirthdayPile({
     screenName: "part2",
     stageId: "pile-stage",
     counterId: "pile-count",
@@ -268,11 +266,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   startBtn.addEventListener("click", () => {
-    goToScreen("part1");
-    part1.start();
+    goToScreen("part2");
+    part2.start();
   });
 
-  // Part 3: sobre que s'obre amb el regal
+  // Part 3, pas 1: els tres caps amb les ulleres de RV. Es renderitza un sol
+  // cop (no és una seqüència de passos) i un toc fa aparèixer el sobre.
+  const part3Heads = document.getElementById("part3-heads");
+  const part3Envelope = document.getElementById("part3-envelope");
+  renderFinale(document.getElementById("part3-stage"), document.getElementById("part3-caption"), PART3_HEADS);
+
+  part3Heads.addEventListener(
+    "click",
+    () => {
+      part3Heads.hidden = true;
+      part3Envelope.hidden = false;
+    },
+    { once: true }
+  );
+
+  // Part 3, pas 2: sobre que s'obre amb el regal
   const envelopeWrap = document.getElementById("envelope-wrap");
   const envelope = document.getElementById("envelope");
   const giftCard = document.getElementById("gift-card");

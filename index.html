@@ -9,7 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧡</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -39,11 +39,6 @@
 
   <!-- Part 2: pila d'aniversari (toca per apilar records fins a 29) -->
   <section class="screen" data-screen="part2">
-    <span class="beach-deco shell-1" aria-hidden="true"></span>
-    <span class="beach-deco shell-2" aria-hidden="true"></span>
-    <span class="beach-deco star-1" aria-hidden="true"></span>
-    <span class="beach-deco star-2" aria-hidden="true"></span>
-
     <header class="bday-header">
       <h2 class="bday-title">Feliços 29</h2>
       <p class="bday-subtitle">Per cada estirada d'orella, un record</p>
@@ -57,35 +52,43 @@
     <button type="button" class="tap-hint" id="part2-hint">Toca la pantalla per començar →</button>
   </section>
 
-  <!-- Part 3: revelació del regal -->
+  <!-- Part 3: caps amb ulleres de RV + revelació del regal -->
   <section class="screen" data-screen="part3">
-    <button type="button" class="envelope-wrap" id="envelope-wrap" aria-label="Obre el regal">
-      <span class="envelope" id="envelope" aria-hidden="true">
-        <span class="envelope-shadow"></span>
-        <span class="envelope-body">
-          <span class="envelope-flap"></span>
-          <span class="envelope-label">El teu regal<br />t'espera</span>
+    <div class="heads-reveal" id="part3-heads">
+      <div class="stage is-finale" id="part3-stage"></div>
+      <p class="step-caption is-finale-caption" id="part3-caption" aria-live="polite"></p>
+      <button type="button" class="tap-hint">Toca la pantalla per continuar →</button>
+    </div>
+
+    <div class="envelope-stage" id="part3-envelope" hidden>
+      <button type="button" class="envelope-wrap" id="envelope-wrap" aria-label="Obre el regal">
+        <span class="envelope" id="envelope" aria-hidden="true">
+          <span class="envelope-shadow"></span>
+          <span class="envelope-body">
+            <span class="envelope-flap"></span>
+            <span class="envelope-label">El teu regal<br />més virtual t'espera</span>
+          </span>
         </span>
-      </span>
-      <span class="tap-hint">Toca per obrir 🎁</span>
-    </button>
+        <span class="tap-hint">Toca per obrir 🎁</span>
+      </button>
 
-    <article class="gift-card" id="gift-card" hidden>
-      <p class="gift-kicker">El teu regal és…</p>
-      <h2 class="gift-title">Una aventura de Realitat Virtual amb llibertat total de moviment</h2>
+      <article class="gift-card" id="gift-card" hidden>
+        <p class="gift-kicker">El teu regal és…</p>
+        <h2 class="gift-title">Una aventura de Realitat Virtual amb llibertat total de moviment</h2>
 
-      <ul class="gift-facts">
-        <li>📍 VRoom Escape · Carrer Pacífic 19, Barcelona</li>
-        <li>⏱️ 45 minuts de missió immersiva</li>
-        <li>⭐ 10/10 “Extraordinari”</li>
-      </ul>
+        <ul class="gift-facts">
+          <li>📍 VRoom Escape · Carrer Pacífic 19, Barcelona</li>
+          <li>⏱️ 45 minuts de missió immersiva</li>
+          <li>⭐ 10/10 “Extraordinari”</li>
+        </ul>
 
-      <p class="gift-desc">
-        Et moussis lliurement per tota la sala, sense motxilles ni cables: només unes ulleres de realitat virtual
-        i set missions per viure amb el teu equip — de l'espai exterior a un temple perdut sota el mar, passant
-        per dracs i pirates. Prepara't per entrar en una realitat on tot és possible.
-      </p>
-    </article>
+        <p class="gift-desc">
+          Et moussis lliurement per tota la sala, sense motxilles ni cables: només unes ulleres de realitat virtual
+          i set missions per viure amb el teu equip — de l'espai exterior a un temple perdut sota el mar, passant
+          per dracs i pirates. Prepara't per entrar en una realitat on tot és possible.
+        </p>
+      </article>
+    </div>
   </section>
 
 </main>
