@@ -18,12 +18,11 @@ const PART1_STEPS = [
 ];
 
 const PART1_FINALE = {
-  img: "assets/collage/collage-finale.png",
   text: "I ara... prepara't per entrar en una realitat on tot és possible 🥽",
-  glasses: [
-    { left: "31%", top: "32%", width: "30%", tilt: "-6deg" },
-    { left: "52%", top: "37%", width: "30%", tilt: "3deg" },
-    { left: "71%", top: "40%", width: "30%", tilt: "8deg" },
+  heads: [
+    { plain: "assets/heads/head-1.png", vr: "assets/heads/head-1-vr.png", position: "left" },
+    { plain: "assets/heads/head-2.png", vr: "assets/heads/head-2-vr.png", position: "center" },
+    { plain: "assets/heads/head-3.png", vr: "assets/heads/head-3-vr.png", position: "right" },
   ],
 };
 
@@ -77,6 +76,7 @@ function renderDots(dotsEl, total, currentIndex) {
 }
 
 function renderStep(stageEl, captionEl, step, tiltSeed) {
+  stageEl.classList.remove("is-finale");
   stageEl.innerHTML = "";
   const wrap = document.createElement("div");
   wrap.className = "stage-step";
@@ -95,31 +95,34 @@ function renderStep(stageEl, captionEl, step, tiltSeed) {
 }
 
 function renderFinale(stageEl, captionEl, finale) {
+  stageEl.classList.add("is-finale");
   stageEl.innerHTML = "";
-  const wrap = document.createElement("div");
-  wrap.className = "stage-step is-finale";
-  wrap.style.setProperty("--tilt", "0deg");
 
-  const img = document.createElement("img");
-  img.className = "stage-photo";
-  img.src = finale.img;
-  img.alt = "";
-  wrap.appendChild(img);
+  const heads = document.createElement("div");
+  heads.className = "finale-heads";
 
-  finale.glasses.forEach((g, i) => {
-    const glasses = document.createElement("img");
-    glasses.className = "vr-glasses";
-    glasses.src = "assets/graphics/vr-glasses.svg";
-    glasses.alt = "";
-    glasses.style.left = g.left;
-    glasses.style.top = g.top;
-    glasses.style.width = g.width;
-    glasses.style.setProperty("--g-tilt", g.tilt);
-    glasses.style.animationDelay = `${0.15 + i * 0.12}s`;
-    wrap.appendChild(glasses);
+  finale.heads.forEach((head, i) => {
+    const slot = document.createElement("div");
+    slot.className = `head-slot is-${head.position}`;
+    if (head.position !== "center") slot.classList.add("is-side");
+
+    const plain = document.createElement("img");
+    plain.className = "head-img";
+    plain.src = head.plain;
+    plain.alt = "";
+    slot.appendChild(plain);
+
+    const vr = document.createElement("img");
+    vr.className = "head-img is-vr";
+    vr.src = head.vr;
+    vr.alt = "";
+    vr.style.animationDelay = `${0.25 + i * 0.15}s`;
+    slot.appendChild(vr);
+
+    heads.appendChild(slot);
   });
 
-  stageEl.appendChild(wrap);
+  stageEl.appendChild(heads);
 
   captionEl.textContent = finale.text;
   captionEl.classList.add("is-finale-caption");

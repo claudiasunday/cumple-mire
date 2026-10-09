@@ -220,17 +220,49 @@ button, a { font-family: inherit; }
   letter-spacing: 0.04em;
 }
 
-/* ---------- Finale (bubble heads + VR glasses) ---------- */
-.vr-glasses {
-  position: absolute;
-  width: 26%;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
-  animation: glasses-land 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+/* ---------- Finale (bubble heads + VR headset) ---------- */
+.stage.is-finale {
+  aspect-ratio: auto;
+  max-width: 400px;
+  height: auto;
 }
 
-@keyframes glasses-land {
-  0% { opacity: 0; transform: translate(-50%, -50%) translateY(-30px) scale(0.6) rotate(var(--g-tilt, 0deg)); }
-  100% { opacity: 1; transform: translate(-50%, -50%) translateY(0) scale(1) rotate(var(--g-tilt, 0deg)); }
+.finale-heads {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  animation: sticker-drop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.head-slot {
+  position: relative;
+  width: 36%;
+  flex-shrink: 0;
+}
+
+.head-slot.is-side { width: 30%; margin-bottom: 6%; }
+.head-slot.is-side.is-left { margin-right: -9%; rotate: -6deg; }
+.head-slot.is-side.is-right { margin-left: -9%; rotate: 6deg; z-index: 1; }
+.head-slot.is-center { z-index: 2; }
+
+.head-img {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(0 10px 16px var(--shadow));
+}
+
+.head-img.is-vr {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: vr-land 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+
+@keyframes vr-land {
+  0% { opacity: 0; transform: translateY(-16px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .step-caption.is-finale-caption {
