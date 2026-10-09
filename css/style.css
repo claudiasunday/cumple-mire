@@ -29,6 +29,7 @@ html, body {
   background: var(--bg-1);
   color: var(--cream);
   font-family: "Poppins", sans-serif;
+  line-height: 1.5;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
 }
@@ -40,7 +41,34 @@ h1, h2, .title-hand {
   margin: 0;
 }
 
-button, a { font-family: inherit; }
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a { font-family: inherit; }
+
+/* visible, high-contrast focus ring for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 /* ---------- App shell ---------- */
 .app {
@@ -109,7 +137,7 @@ button, a { font-family: inherit; }
   margin: 0 0 8px;
 }
 
-.title-hand { font-size: 52px; margin-bottom: 18px; }
+.title-hand { font-size: clamp(40px, 11vw, 60px); margin-bottom: 18px; }
 
 .intro-text {
   font-size: 16px;
@@ -205,7 +233,8 @@ button, a { font-family: inherit; }
 
 .step-caption {
   font-family: "Caveat", cursive;
-  font-size: 26px;
+  font-size: clamp(21px, 5.5vw, 26px);
+  line-height: 1.25;
   color: var(--cream);
   background: rgba(10, 46, 51, 0.55);
   padding: 6px 18px;
@@ -215,9 +244,11 @@ button, a { font-family: inherit; }
 }
 
 .tap-hint {
-  font-size: 13px;
-  color: rgba(255, 246, 234, 0.55);
+  display: inline-block;
+  font-size: 14px;
+  color: rgba(255, 246, 234, 0.7);
   letter-spacing: 0.04em;
+  border-radius: 6px;
 }
 
 /* ---------- Finale (bubble heads + VR headset) ---------- */
@@ -266,7 +297,7 @@ button, a { font-family: inherit; }
 }
 
 .step-caption.is-finale-caption {
-  font-size: 28px;
+  font-size: clamp(22px, 6vw, 28px);
   color: var(--accent);
   background: transparent;
   padding: 0;
@@ -302,7 +333,7 @@ button, a { font-family: inherit; }
 }
 
 .bday-title {
-  font-size: 48px;
+  font-size: clamp(38px, 10vw, 48px);
   color: var(--beach-cream);
   text-shadow: 0 4px 10px rgba(15, 76, 86, 0.4);
 }
@@ -310,6 +341,7 @@ button, a { font-family: inherit; }
 .bday-subtitle {
   margin: 6px 0 0;
   font-size: 15px;
+  line-height: 1.5;
   color: rgba(255, 249, 240, 0.9);
 }
 
@@ -351,6 +383,9 @@ button, a { font-family: inherit; }
   font-family: "Caveat", cursive;
   font-size: 34px;
   color: var(--beach-cream);
+  background: rgba(10, 46, 51, 0.4);
+  padding: 2px 16px;
+  border-radius: 999px;
   margin: 0;
   animation: counter-pulse 0.3s ease;
 }
@@ -362,13 +397,15 @@ button, a { font-family: inherit; }
 
 .bday-counter-total {
   font-size: 22px;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 .screen[data-screen="part2"] .tap-hint {
   position: relative;
   z-index: 1;
-  color: rgba(255, 249, 240, 0.75);
+  color: var(--beach-cream);
+  background: rgba(10, 46, 51, 0.4);
+  padding: 4px 14px;
 }
 
 /* ---------- Gift reveal (part 3) ---------- */
@@ -381,6 +418,7 @@ button, a { font-family: inherit; }
 }
 
 .envelope {
+  display: block;
   position: relative;
   width: 220px;
   height: 150px;
@@ -440,7 +478,8 @@ button, a { font-family: inherit; }
 }
 
 .gift-title {
-  font-size: 32px;
+  font-size: clamp(26px, 7vw, 32px);
+  line-height: 1.15;
   margin-bottom: 16px;
 }
 
@@ -450,8 +489,9 @@ button, a { font-family: inherit; }
   margin: 0 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   font-size: 14px;
+  line-height: 1.4;
   color: rgba(255, 246, 234, 0.9);
 }
 
@@ -464,6 +504,5 @@ button, a { font-family: inherit; }
 
 /* ---------- Responsive (tablet) ---------- */
 @media (min-width: 600px) {
-  .title-hand { font-size: 64px; }
   .stage { max-width: 380px; }
 }
