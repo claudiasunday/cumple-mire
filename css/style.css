@@ -361,19 +361,13 @@ a { font-family: inherit; }
   object-fit: contain;
   filter: drop-shadow(0 10px 16px rgba(15, 51, 56, 0.4));
   transform: translate(-50%, -50%) rotate(var(--pr, 0deg));
-  animation: stamp-drop 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  /* apareix de cop, sense animació d'entrada */
   transition: filter 0.4s ease;
 }
 
 /* equivalent a una capa negra del 20 % (respecta la silueta del sticker) */
 .pile-photo.is-old {
   filter: brightness(0.8) drop-shadow(0 10px 16px rgba(15, 51, 56, 0.4));
-}
-
-/* un sol moviment: baixa i s'assenta, sense rebot */
-@keyframes stamp-drop {
-  from { opacity: 0; scale: 1.15; }
-  to { opacity: 1; scale: 1; }
 }
 
 .bday-counter {
