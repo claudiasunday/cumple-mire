@@ -290,11 +290,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Part 3, pas 1: els tres caps amb les ulleres de RV. Es renderitza un sol
-  // cop (no és una seqüència de passos) i un toc fa aparèixer el sobre.
+  // cop (no és una seqüència de passos) i el botó fa aparèixer el sobre.
   const part3Heads = document.getElementById("part3-heads");
   const part3Envelope = document.getElementById("part3-envelope");
 
-  part3Heads.addEventListener(
+  document.getElementById("part3-continue").addEventListener(
     "click",
     () => {
       part3Heads.hidden = true;

@@ -138,7 +138,7 @@ a { font-family: inherit; }
   margin: 0 0 8px;
 }
 
-.title-hand { font-size: clamp(40px, 11vw, 60px); margin-bottom: 18px; }
+.title-hand { font-size: clamp(36px, 10vw, 52px); margin-bottom: 32px; }
 
 .intro-text {
   font-size: 16px;
@@ -310,6 +310,12 @@ a { font-family: inherit; }
   padding: 0;
   /* apareix quan ja tothom porta les ulleres */
   animation: soft-fade-in 0.8s ease-out 4s both;
+}
+
+/* el botó surt amb el text, quan tothom ja porta les ulleres */
+.btn-gift {
+  margin-top: 8px;
+  animation: soft-fade-in 0.8s ease-out 4.4s both;
 }
 
 /* ---------- Part 2: birthday photo pile ---------- */
