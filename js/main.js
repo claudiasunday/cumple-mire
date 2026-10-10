@@ -32,34 +32,16 @@ const PART3_HEADS = {
 };
 
 // Part 2: "Feliços 29" — cada toc apila una foto nova (una per any).
-// BIRTHDAY_AGE taps en total; les fotos del pool es van repetint en bucle
-// si n'hi ha menys que anys, variant sempre la posició/gir de cada tanda.
-// Actualment hi ha 20 fotos úniques; falten 9 per arribar a les 29 sense
-// repetir cap — afegeix-les aquí quan hi siguin (assets/collage/collage-XX.png).
+// BIRTHDAY_AGE taps en total. Hi ha exactament 29 fotos úniques a
+// assets/pile/ (pile-01.png … pile-29.png), així que no cal repetir cap.
+// Per canviar-ne alguna, substitueix el fitxer corresponent sense canviar
+// el nom; per afegir-ne de noves caldria tornar a un array explícit.
 const BIRTHDAY_AGE = 29;
 
-const PART2_POOL = [
-  "assets/collage/collage-11.png",
-  "assets/collage/collage-12.png",
-  "assets/collage/collage-13.png",
-  "assets/collage/collage-14.png",
-  "assets/collage/collage-15.png",
-  "assets/collage/collage-16.png",
-  "assets/collage/collage-17.png",
-  "assets/collage/collage-18.png",
-  "assets/collage/collage-19.png",
-  "assets/collage/collage-01.png",
-  "assets/collage/collage-02.png",
-  "assets/collage/collage-03.png",
-  "assets/collage/collage-04.png",
-  "assets/collage/collage-05.png",
-  "assets/collage/collage-06.png",
-  "assets/collage/collage-07.png",
-  "assets/collage/collage-08.png",
-  "assets/collage/collage-09.png",
-  "assets/collage/collage-10.png",
-  "assets/collage/collage-finale.png",
-];
+const PART2_POOL = Array.from(
+  { length: BIRTHDAY_AGE },
+  (_, i) => `assets/pile/pile-${String(i + 1).padStart(2, "0")}.png`
+);
 
 // Segons que es veuen els caps sense ulleres abans que comenci la transició.
 const HEADS_HOLD_S = 2.5;
