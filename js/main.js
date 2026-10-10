@@ -47,8 +47,10 @@ const PART2_POOL = Array.from(
   (_, i) => `assets/pile/pile-${String(i + 1).padStart(2, "0")}.png`
 );
 
-// Segons que es veuen els caps sense ulleres abans que comenci la transició.
-const HEADS_HOLD_S = 2.5;
+// Segons que es veuen els caps sense ulleres abans que comencin a sortir
+// les ulleres (curt), i després es queden una bona estona amb ulleres
+// posades abans que arribi el "monstre" — vegeu heads-lifecycle a css.
+const HEADS_HOLD_S = 1;
 
 // ---------------------------------------------------------------------------
 // Motor de navegació entre pantalles
@@ -117,9 +119,9 @@ function renderFinale(stageEl, captionEl, finale) {
     vr.className = "head-img is-vr";
     vr.src = head.vr;
     vr.alt = "";
-    // Primer es veuen els tres caps sense ulleres una bona estona; després
-    // les ulleres apareixen amb un fos suau, una darrere l'altra.
-    vr.style.animationDelay = `${HEADS_HOLD_S + i * 0.5}s`;
+    // Les ulleres surten de seguida, una darrere l'altra, i es queden
+    // posades una bona estona abans que arribi el "monstre".
+    vr.style.animationDelay = `${HEADS_HOLD_S + i * 0.4}s`;
     slot.appendChild(vr);
 
     heads.appendChild(slot);
