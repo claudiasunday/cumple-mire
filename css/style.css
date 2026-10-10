@@ -127,6 +127,20 @@ a { font-family: inherit; }
   overflow-y: auto;
 }
 
+/* Fons de fotos reals: la intro té la seva pròpia imatge; a partir de
+   "Comença" (part1 oculta, part2, part3) es fa servir l'altra. */
+.screen[data-screen="intro"] {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.67) 0%, rgba(0, 0, 0, 0.67) 100%),
+    url("../assets/graphics/bg-intro.jpg") lightgray 50% / cover no-repeat;
+}
+
+.screen[data-screen="part1"],
+.screen[data-screen="part2"],
+.screen[data-screen="part3"] {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.67) 0%, rgba(0, 0, 0, 0.67) 100%),
+    url("../assets/graphics/bg-main.jpg") lightgray 50% / cover no-repeat;
+}
+
 /* ---------- Intro ---------- */
 .intro-content { max-width: 420px; }
 
@@ -265,7 +279,28 @@ a { font-family: inherit; }
   align-items: flex-end;
   justify-content: center;
   width: 100%;
-  animation: soft-fade-in 0.8s ease-out both;
+  /* apareixen, es queden una estona amb les ulleres, i després s'esvaeixen
+     quan entra la imatge "monstre" */
+  animation: heads-lifecycle 4.8s ease-out both;
+}
+
+@keyframes heads-lifecycle {
+  0% { opacity: 0; }
+  17% { opacity: 1; }
+  83% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.finale-monster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: drop-shadow(0 10px 16px var(--shadow));
+  /* entra just quan els caps ja s'estan esvaint (veure heads-lifecycle) */
+  animation: soft-fade-in 0.8s ease-out 4s both;
 }
 
 .head-slot {
@@ -312,19 +347,15 @@ a { font-family: inherit; }
   animation: soft-fade-in 0.8s ease-out 4s both;
 }
 
-/* el botó surt amb el text, quan tothom ja porta les ulleres */
+/* el botó surt després del gag del "monstre", no abans */
 .btn-gift {
   margin-top: 8px;
-  animation: soft-fade-in 0.8s ease-out 4.4s both;
+  animation: soft-fade-in 0.8s ease-out 5.6s both;
 }
 
 /* ---------- Part 2: birthday photo pile ---------- */
 .screen[data-screen="part2"] {
   justify-content: space-between;
-  background:
-    linear-gradient(180deg, rgba(10, 46, 51, 0.55) 0%, rgba(10, 46, 51, 0.15) 35%, rgba(10, 46, 51, 0.3) 70%, rgba(10, 46, 51, 0.6) 100%),
-    url("../assets/graphics/beach-collage.jpg") center / cover no-repeat;
-  background-color: var(--beach-teal-deep);
 }
 
 .bday-header {

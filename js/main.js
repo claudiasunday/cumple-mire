@@ -21,7 +21,10 @@ const PART1_STEPS = [
 ];
 
 // Part 3, primer pas: els tres caps + ulleres de RV. La Mire (l'aniversari)
-// va al centre.
+// va al centre. Quan ja ha aparegut el text (però encara no el botó), els
+// caps es transformen en la imatge "monster" (el mateix gag però amb cossos
+// de criatura) — vegeu .finale-monster / .btn-gift a css/style.css per al
+// temps exacte de l'animació.
 const PART3_HEADS = {
   text: "I ara... prepara't per entrar en una realitat on tot és possible 🥽",
   heads: [
@@ -29,6 +32,7 @@ const PART3_HEADS = {
     { plain: "assets/heads/head-3.png", vr: "assets/heads/head-3-vr.png", position: "center" },
     { plain: "assets/heads/head-2.png", vr: "assets/heads/head-2-vr.png", position: "right" },
   ],
+  monster: "assets/heads/monster.png",
 };
 
 // Part 2: "Feliços 29" — cada toc apila una foto nova (una per any).
@@ -122,6 +126,14 @@ function renderFinale(stageEl, captionEl, finale) {
   });
 
   stageEl.appendChild(heads);
+
+  if (finale.monster) {
+    const monster = document.createElement("img");
+    monster.className = "finale-monster";
+    monster.src = finale.monster;
+    monster.alt = "";
+    stageEl.appendChild(monster);
+  }
 
   captionEl.textContent = finale.text;
   captionEl.classList.add("is-finale-caption");
